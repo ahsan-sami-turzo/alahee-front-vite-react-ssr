@@ -1,0 +1,35 @@
+.grid--borderBetween > [class*="col-"]:before,
+.grid--borderBetween > [class*="col-"]:after {
+  background: #b2b2b2;
+  bottom: 0;
+  content: " ";
+  position: absolute;
+  width: 1px;
+  top: 0;
+}
+.grid--borderBetween > [class*="col-"]:before {
+  left: 0;
+}
+.grid--borderBetween > [class*="col-"]:after {
+  right: -1px;
+}
+.grid--borderBetween > [class*="col-"]:first-child:before,
+.grid--borderBetween > [class*="col-"]:last-child:after {
+  display: none;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+
+.forgot-password{
+  margin: 0;
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
