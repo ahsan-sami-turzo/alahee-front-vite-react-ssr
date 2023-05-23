@@ -206,7 +206,7 @@ const HomePage = () => {
     <>
       <Helmet>
         <title>Alahee | প্রয়োজনের সব</title>
-        <link rel="shortcut icon" href="/favicon_.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />

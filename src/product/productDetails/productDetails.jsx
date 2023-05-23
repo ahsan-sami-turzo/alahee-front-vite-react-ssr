@@ -14,38 +14,24 @@ import {
   TwitterIcon,
   TwitterShareButton
 } from "react-share";
-
 import { CartContext } from "../../context/CartContext";
 import { ShowModalContext } from "../../context/ShowModalContext";
-// import { TemplateContext } from "../../context/TemplateContext";
-
-import OverviewReviewSpecification from "./OverviewReviewSpecification";
-import SameVendorOrSameCatProducts from "./SameVendorOrSameCatProducts";
-
-
-
 import {
   calculateProductPriceAfterDiscount
 } from '../../utils/utils';
+import OverviewReviewSpecification from "./OverviewReviewSpecification";
+import SameVendorOrSameCatProducts from "./SameVendorOrSameCatProducts";
 
 const base = import.meta.env.VITE_APP_FRONTEND_SERVER_URL;
 const fileUrl = import.meta.env.VITE_APP_FILE_URL;
 const project_name = import.meta.env.VITE_APP_PROJECT_NAME;
 
-// eslint-disable-next-line
-const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 const ProductDetails = (props) => {
   const history = useHistory();
-  // const [cart, setCart] = useContext(CartContext);
   const { cart, setCart, cartProductsCount, setCartProductsCount } = useContext(CartContext)
-
-  // const {myValue,setMyValue} = useContext(TemplateContext);
   const [showModal, setShowModal] = useContext(ShowModalContext);
-
   const [productSlug, setProductSlug] = useState(props.match.params.slug);
   const [productId, setProductId] = useState(productSlug.split("-").pop());
-  // const [productId, setProductId] = useState(props.match.params.id);
   const [combinations, setCombinations] = useState([]);
   const [discountAmount, setDiscountAmount] = useState([]);
   const [
@@ -78,7 +64,6 @@ const ProductDetails = (props) => {
   const [onlySize, set_onlySize] = useState(false);
   const [noColorAndSize, set_noColorAndSize] = useState(false);
   const [colorAndSize, set_colorAndSize] = useState(false);
-
   const [productQuantity, setProductQuantity] = useState(1);
   const [productQuantityText, setProductQuantityText] = useState(1);
   const [selectedProductStockAmount, setSelectedProductStockAmount] = useState(
@@ -87,12 +72,9 @@ const ProductDetails = (props) => {
   const [selectedSizeId, setSelectedSizeId] = useState(0);
   const [selectedColorId, setSelectedColorId] = useState(0);
   const [selectedColorName, setSelectedColorName] = useState("");
-
   const [show_alert, set_show_alert] = useState(false);
   const [alert_text, set_alert_text] = useState("");
-
   const [, forceUpdate] = useReducer(x => x + 1, 0);
-  // const [updateView, setUpdateView] = useState(0);
 
   useEffect(() => {
     setProductId(productSlug.split("-").pop());
@@ -395,14 +377,7 @@ const ProductDetails = (props) => {
       return
     }
 
-
-    // getProductStockQuantity().then((data) => {
-    //   console.log(data.stockQuantity);
-    // });
-    // return;
-
     if (!checkProductToCartEligibility()) return;
-
     if (!doesSelectedProductExist()) return;
 
     const cartObj = {
@@ -411,8 +386,6 @@ const ProductDetails = (props) => {
       sizeId: selectedSizeId === "" ? 0 : selectedSizeId * 1,
       quantity: productQuantity * 1,
     };
-
-    // setCart((currentState) => [...currentState, cartObj]);
 
     const cartDataExisting = JSON.parse(localStorage.getItem(data));
 
@@ -431,7 +404,6 @@ const ProductDetails = (props) => {
           cardUpdated = true;
         }
 
-        // item.quantity = item.quantity >= 5 ? 5 : item.quantity;
         return item;
       });
 
@@ -442,8 +414,6 @@ const ProductDetails = (props) => {
       localStorage.setItem(data, JSON.stringify([{ ...cartObj }]));
       setCart(cartObj);
     }
-
-    // console.log("cartObj.quantity ... ", cartObj.quantity); return;
 
     if (localStorage.customer_id) {
       fetch(base + "/api/add_cart_direct", {
@@ -464,7 +434,6 @@ const ProductDetails = (props) => {
         .then((response) => {
           if (response.data === true) {
             getCustomerCartProductsCount(localStorage.customer_id);
-            // setCartProductsCount(cartObj.quantity);
             let id = "";
             if (data === "cart") id = "successCartMessage";
             else if (data === "wish") id = "WishListModalButton";
@@ -480,8 +449,6 @@ const ProductDetails = (props) => {
       if (showModal) link.click();
     }
   };
-
-
 
   const getCustomerCartProductsCount = (customer_id) => {
     axios.get(`${base}/api/getCustomerCartProductsCount/${customer_id}`)
@@ -514,14 +481,12 @@ const ProductDetails = (props) => {
     doesSelectedColorExist();
   }, [selectedColorId]);
 
-  const shareUrl = `https://${project_name}/productDetails/${productId}`;
+  const shareUrl = `https://${project_name}/productDetails/${productSlug}`;
   const imageURL = `${fileUrl}/upload/product/compressedProductImages/${homeImage}`;
 
   const imgProps = {
     img: `${fileUrl}/upload/product/compressedProductImages/${homeImage}`,
-    // img: `/image/test_low.png`,
     width: 340,
-    // heigth: 600,
     scale: 1.4,
     offset: { vertical: 0, horizontal: 10 },
     zoomStyle: "opacity: 1",
@@ -558,15 +523,20 @@ const ProductDetails = (props) => {
     window.location.reload();
   }
 
+  console.log('product details')
+  console.log('shareUrl', shareUrl)
+  console.log('imageURL', imageURL)
+  console.log('productSlug', productSlug)
+
   return (
     <Fragment>
       <Helmet>
-        <title>Alahee | {productSlug}</title>
         <meta property="og:url" content={`https://l.facebook.com/l.php?u=${shareUrl ? shareUrl : ''}`} />
-        <meta property="og:description" content={productSlug} />
+        <title>Alahee | {productSlug}</title>
         <meta property="og:image" content={imageURL} />
         <meta property="og:image:secure_url" content={imageURL} />
-        <meta property="fb:app_id" content="2187526391389667" />
+        <meta property="og:description" content={productSlug} />
+        <meta property="fb:app_id" content="542825373971492" />
         <meta
           name="viewport"
           content="user-scalable=no, width=device-width, initial-scale=1.0"
