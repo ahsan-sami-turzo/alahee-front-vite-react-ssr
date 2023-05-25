@@ -494,8 +494,8 @@ const ProductDetails = (props) => {
     doesSelectedColorExist();
   }, [selectedColorId]);
 
-  // const shareUrl = `https://${project_name}/productDetails/${productSlug}`;
-  const shareUrl = `https://alahee.com/facebook.php?url=https://alahee.com/facebook.php?id=${productId}&rand=${uniqueId}`;
+  const productDetailsUrl = `https://${project_name}/productDetails/${productSlug}`;
+  const shareUrl = `https://www.facebook.com/sharer.php?u=https://microfinplus.com/test/alahee/facebook.php?id=${productId}&rand=${uniqueId}`;
   const imageURL = `${fileUrl}/upload/product/compressedProductImages/${homeImage}`;
 
   const imgProps = {
@@ -574,7 +574,7 @@ const ProductDetails = (props) => {
             <div className="ct-socials-icon" data-href={`${shareUrl}`} data-layout="" data-size="">
               <a
                 target="_blank"
-                href={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
+                href={`${shareUrl}`}
                 className="fb-xfbml-parse-ignore">
                 <FacebookIcon size={35} round />
               </a>
