@@ -26,12 +26,25 @@ const base = import.meta.env.VITE_APP_FRONTEND_SERVER_URL;
 const fileUrl = import.meta.env.VITE_APP_FILE_URL;
 const project_name = import.meta.env.VITE_APP_PROJECT_NAME;
 
+const generateUniqueId = (length) => {
+  let result = ''
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+  let counter = 0
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    counter += 1
+  }
+  return result
+}
+
 const ProductDetails = (props) => {
   const history = useHistory();
   const { cart, setCart, cartProductsCount, setCartProductsCount } = useContext(CartContext)
   const [showModal, setShowModal] = useContext(ShowModalContext);
   const [productSlug, setProductSlug] = useState(props.match.params.slug);
   const [productId, setProductId] = useState(productSlug.split("-").pop());
+  const [uniqueId, setUniqueId] = useState(generateUniqueId(12))
   const [combinations, setCombinations] = useState([]);
   const [discountAmount, setDiscountAmount] = useState([]);
   const [
@@ -481,7 +494,8 @@ const ProductDetails = (props) => {
     doesSelectedColorExist();
   }, [selectedColorId]);
 
-  const shareUrl = `https://${project_name}/productDetails/${productSlug}`;
+  // const shareUrl = `https://${project_name}/productDetails/${productSlug}`;
+  const shareUrl = `https://alahee.com/facebook.php?url=https://alahee.com/facebook.php?id=${productId}&rand=${uniqueId}`;
   const imageURL = `${fileUrl}/upload/product/compressedProductImages/${homeImage}`;
 
   const imgProps = {
