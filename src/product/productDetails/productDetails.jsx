@@ -495,7 +495,7 @@ const ProductDetails = (props) => {
   }, [selectedColorId]);
 
   const productDetailsUrl = `https://${project_name}/productDetails/${productSlug}`;
-  const shareUrl = `https://www.facebook.com/sharer.php?u=https://microfinplus.com/test/alahee/facebook.php?id=${productId}&rand=${uniqueId}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer.php?u=https://share.alahee.com/?id=${productId}&rand=${uniqueId}`;
   const imageURL = `${fileUrl}/upload/product/compressedProductImages/${homeImage}`;
 
   const imgProps = {
@@ -537,15 +537,11 @@ const ProductDetails = (props) => {
     window.location.reload();
   }
 
-  console.log('product details')
-  console.log('shareUrl', shareUrl)
-  console.log('imageURL', imageURL)
-  console.log('productSlug', productSlug)
 
   return (
     <Fragment>
       <Helmet>
-        <meta property="og:url" content={`https://l.facebook.com/l.php?u=${shareUrl ? shareUrl : ''}`} />
+        <meta property="og:url" content={`https://l.facebook.com/l.php?u=${productDetailsUrl ? productDetailsUrl : ''}`} />
         <title>Alahee | {productSlug}</title>
         <meta property="og:image" content={imageURL} />
         <meta property="og:image:secure_url" content={imageURL} />
@@ -570,35 +566,28 @@ const ProductDetails = (props) => {
         {/* social icons  */}
         <ul className="ct-socials">
 
+          {/* FACEBOOK  */}
           <li>
-            <div className="ct-socials-icon" data-href={`${shareUrl}`} data-layout="" data-size="">
+            <div className="ct-socials-icon" data-href={`${facebookShareUrl}`}>
               <a
                 target="_blank"
-                href={`${shareUrl}`}
+                href={`${facebookShareUrl}`}
                 className="fb-xfbml-parse-ignore">
                 <FacebookIcon size={35} round />
               </a>
             </div>
           </li>
 
+          {/* TWITTER  */}
           <li>
             <div className="ct-socials-icon">
-              <TwitterShareButton url={shareUrl} quote={productName}>
+              <TwitterShareButton url={productDetailsUrl} quote={productName}>
                 <TwitterIcon size={35} round />
               </TwitterShareButton>
             </div>
           </li>
-          {/* <li>
-            <div className="ct-socials-icon">
-              <FacebookShareButton
-                url={shareUrl}
-                imageURL={imageURL}
-                quote={productName}
-              >
-                <FacebookIcon size={35} round />
-              </FacebookShareButton>
-            </div>
-          </li> */}
+
+          {/* PINTEREST  */}
           <li>
             <div className="ct-socials-icon">
               <PinterestShareButton url={String(window.location)}>
@@ -606,9 +595,11 @@ const ProductDetails = (props) => {
               </PinterestShareButton>
             </div>
           </li>
+
+          {/* LINKEDIN  */}
           <li>
             <div className="ct-socials-icon">
-              <LinkedinShareButton url={shareUrl} quote={productName}>
+              <LinkedinShareButton url={productDetailsUrl} quote={productName}>
                 <LinkedinIcon size={35} round />
               </LinkedinShareButton>
             </div>
